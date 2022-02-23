@@ -8,5 +8,9 @@ from app import app #we import app instance from app folder
 def index():  #view function
 
     """ View root page """
-    message = 'Hello World'
-    return render_template('index.html', message = message)
+    message = 'Hello World' #variable
+    return render_template('index.html', message = message) #pass the variable as an argument
+
+@app.route('/movie/<movie_id>')
+def movie(movie_id):
+    return render_template('movie.html', id = movie_id)
