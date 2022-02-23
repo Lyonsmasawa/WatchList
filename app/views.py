@@ -6,7 +6,7 @@ from app import app #we import app instance from app folder
 
 @app.route('/') #route decorator
 def index():  #view function
-    
+
     """ View root page """
     message = 'Hello World'
-    return render_template('index.html')
+    return render_template('index.html', message = message)
