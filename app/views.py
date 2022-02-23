@@ -13,5 +13,5 @@ def index():  #view function
 
 @app.route('/movie/<movie_id>')
 def movie(movie_id):
-    introduction = "Hello movie code "
+    introduction = "Hello movie code: "
     return render_template('movie.html', id = movie_id, intro = introduction)
