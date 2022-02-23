@@ -3,13 +3,13 @@ import movie
 Movie = movie.Movie
 
 class TestMovie(unittest.TestCase):
-
+    """one"""
     def setUp(self):
         self.new_movie = Movie(1234,'Python Must Be Crazy','A thrilling new Python Series','khsjha27hbs',8.5,129993)
 
     def test_instance(self):
         self.assertTrue(isinstance(self.new_movie, Movie)) #isinstance checks if 
-
+    """three"""
     def test__init__(self):
         self.assertEqual(self.new_movie.id, 1234)
         self.assertEqual(self.new_movie.title, 'Python Must Be Crazy')
