@@ -10,7 +10,13 @@
     <title> Welcome to the Best movie review site</title>
     {% endif %}
 </head>
+{% extends 'bootstrap/navbar.html'}
 <body>
+    <!-- Navbar block -->
+    {% block navbar %}
+        {% {% include 'navbar.html' %} %}
+    {% endblock %}
+
     <!-- Content Block -->
     {% block content %}
     <!-- Content to be replaced -->
