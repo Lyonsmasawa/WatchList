@@ -1,7 +1,7 @@
 from flask import render_template #takes in the name of a template file as an argument and automatically searches for the template file
 #in our app/templates/subdirectory and loads it 
 from app import app
-from .request import get_movies #we import app instance from app folder
+from .request import get_movies, get_movie #we import app instance from app folder
 
 @app.route('/') #route decorator
 def index():  #view function
@@ -15,7 +15,13 @@ def index():  #view function
     title = 'Home - Welcome to The Best Movie Review Website Online' #variable
     return render_template('index.html', title = title, popular = popular_movies, upcoming = upcoming_movies, now = now_showing_movie) #pass the variable as an argument
 
-@app.route('/movie/<movie_id>')
-def movie(movie_id):
-    introduction = "Hello movie code: "
-    return render_template('movie.html', id = movie_id, intro = introduction)
+@app.route('/movie/<int:id>')
+def movie(id):
+
+    '''
+    View movie page function that returns the movie details page and its data
+    '''
+    movie = get_movie(id)
+    title = f'{movie.title}'
+
+    return render_template('movie.html',title = title,movie = movie)
