@@ -1,5 +1,7 @@
-from app import create_app
+from app import create_app, db
 from flask_script import Manager, Server
+
+from app.models import User
 
 app = create_app('development')
 
@@ -11,6 +13,10 @@ def test():
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=2).run(tests)
+
+@manager.shell
+def make_shell_context(): #creates shell context
+    return dict(app = app, db = db, User = User) #return the instance of each of these
 
 if __name__ == '__main__':
     manager.run()

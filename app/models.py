@@ -1,4 +1,5 @@
-"""two"""
+from . import db
+
 class Movie:
     
     def __init__(self, id, title, overview, poster, vote_average, vote_count):
@@ -38,3 +39,20 @@ class Review:
                 response.append(review)
 
         return response
+
+class User(db.Model): #arg helps connect  to db
+    __tablename__ = 'users' #table name
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'User {self.username}'
+
+class Role(db.Model):
+    __tablename__ = 'roles'
+    
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(255))
+
+    def __repr__(self):
+        return f'Role {self.name}'
