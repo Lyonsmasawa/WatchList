@@ -1,12 +1,12 @@
 from flask import render_template, request, redirect, url_for #takes in the name of a template file as an argument and automatically searches for the template file
 #in our app/templates/subdirectory and loads it 
-from app import app
-from app.models import reviews
-from .request import get_movies, get_movie, search_movie #we import app instance from app folder
+from ..request import get_movies, get_movie, search_movie #we import app instance from app folder
 from .forms import ReviewForm
-Review = reviews.Review
+from flask import render_template, request, redirect, url_for
+from . import main
+from ..models import Review
 
-@app.route('/') #route decorator
+@main.route('/') #route decorator
 def index():  #view function
 
     """ View root page """
@@ -19,11 +19,11 @@ def index():  #view function
     search_movie = request.args.get('movie_query')
 
     if search_movie:
-        return redirect(url_for('search', movie_name = search_movie))
+        return redirect(url_for('main.search', movie_name = search_movie))
     else:
         return render_template('index.html', title = title, popular = popular_movies, upcoming = upcoming_movies, now = now_showing_movie) #pass the variable as an argument
 
-@app.route('/movie/<int:id>')
+@main.route('/movie/<int:id>')
 def movie(id):
 
     '''
@@ -34,7 +34,7 @@ def movie(id):
     reviews = Review.get_reviews(movie.id)
     return render_template('movie.html',title = title,movie = movie, reviews = reviews)
 
-@app.route('/search/<movie_name>')
+@main.route('/search/<movie_name>')
 def search(movie_name):
     """ display search results """
     movie_name_list = movie_name.split(" ")
@@ -43,7 +43,7 @@ def search(movie_name):
     title = f'search results for {movie_name}'
     return render_template('search.html', movies = searched_movies)
 
-@app.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
+@main.route('/movie/review/new/<int:id>', methods = ['GET','POST'])
 def new_review(id):
     form = ReviewForm()
     movie = get_movie(id)

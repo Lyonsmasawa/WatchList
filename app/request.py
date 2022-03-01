@@ -1,13 +1,17 @@
-from app import app
 import urllib.request, json
-from .models import movie
-Movie = movie.Movie
+from .models import Movie
 
 #getting api key
-api_key = app.config['MOVIE_API_KEY']
+api_key = None
 
 #getting the movie base url
-base_url = app.config['MOVIE_API_BASE_URL'] #APP.CONFIG['name of object to access']
+base_url = None #APP.CONFIG['name of object to access']
+
+def configure_request(app):
+    global api_key, base_url, article_url
+    api_key = app.config['MOVIE_API_KEY']
+    base_url = app.config['MOVIE__API_BASE_URL']
+
 
 def get_movies(category):
     """Function that gets the json response to our URL request"""
