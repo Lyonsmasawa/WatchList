@@ -1,4 +1,3 @@
-from crypt import methods
 from flask import render_template, request, redirect, url_for, abort #takes in the name of a template file as an argument and automatically searches for the template file
 #in our app/templates/subdirectory and loads it 
 from ..request import get_movies, get_movie, search_movie #we import app instance from app folder
@@ -6,7 +5,7 @@ from .forms import ReviewForm, UpdateProfile
 from flask import render_template, request, redirect, url_for
 from . import main
 from ..models import Review, User
-from flask_login import login_required #will intercept a request and check if user is authenticated and if not the user is directed to the login page
+from flask_login import login_required, current_user #will intercept a request and check if user is authenticated and if not the user is directed to the login page
 from .. import db, photos
 
 @main.route('/') #route decorator
@@ -51,13 +50,16 @@ def search(movie_name):
 def new_review(id):
     form = ReviewForm()
     movie = get_movie(id)
-
     if form.validate_on_submit():
         title = form.title.data
         review = form.review.data
-        new_review = Review(movie.id,title,movie.poster,review)
+
+        # Updated review instance
+        new_review = Review(movie_id=movie.id,movie_title=title,image_path=movie.poster,movie_review=review,user=current_user)
+
+        # save review method
         new_review.save_review()
-        return redirect(url_for('movie',id = movie.id ))
+        return redirect(url_for('.movie',id = movie.id ))
 
     title = f'{movie.title} review'
     return render_template('new_review.html',title = title, review_form=form, movie=movie)
