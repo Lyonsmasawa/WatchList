@@ -7,7 +7,7 @@ from flask import render_template, request, redirect, url_for
 from . import main
 from ..models import Review, User
 from flask_login import login_required #will intercept a request and check if user is authenticated and if not the user is directed to the login page
-from .. import db
+from .. import db, photos
 
 @main.route('/') #route decorator
 def index():  #view function
@@ -88,3 +88,14 @@ def update_profile(uname):
 
         return redirect(url_for('.profile', uname = user.username))
     return render_template('profile/update.html', form = form)
+
+@main.route('/user/<uname>/update/pic',methods= ['POST'])
+@login_required
+def update_pic(uname):
+    user = User.query.filter_by(username = uname).first()
+    if 'photo' in request.files: #request checks if any file with the name photo has been passed
+        filename = photos.save(request.files['photo']) # the save method saves the file in our application
+        path = f'photos/{filename}'
+        user.profile_pic_path = path
+        db.session.commit()
+    return redirect(url_for('main.profile',uname=uname))
