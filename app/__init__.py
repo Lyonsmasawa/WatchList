@@ -5,9 +5,11 @@ from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_uploads import UploadSet, configure_uploads, IMAGES
+from flask_mail import Mail
 
 bootstrap = Bootstrap()
 db = SQLAlchemy()
+mail = Mail()
 photos = UploadSet('photos', IMAGES) #UPLOAD SET DEFINES WHAT WE ARE UPLOADING, we pass in a name and the type of file we want to upload which is an image
 login_manager = LoginManager() #create an instance 
 login_manager.session_protection = 'strong' #provides diff security levels and by using strong it will minitor changes in the user header and log the user out
@@ -22,7 +24,7 @@ def create_app(config_name):
 
     bootstrap.init_app(app)
     db.init_app(app)
-
+    mail.init_app(app)
 
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
