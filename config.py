@@ -8,7 +8,7 @@ class Config:
     MOVIE_API_KEY = os.environ.get('MOVIE_API_KEY')
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringa:passdb@localhost/watchlist'
-    UPLOADED_FILES_DEST = 'app/static/photos'
+    UPLOADED_PHOTOS_DEST = 'app/static/photos'
     MAIL_SERVER = 'smtp.googlemail.com' #smtp server
     MAIL_PORT = 587 #gmail smtp server port
     MAIL_USE_TLS = True #enables a transport layer security to secure emails when sending
