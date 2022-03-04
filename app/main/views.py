@@ -7,6 +7,7 @@ from . import main
 from ..models import Review, User
 from flask_login import login_required, current_user #will intercept a request and check if user is authenticated and if not the user is directed to the login page
 from .. import db, photos
+import markdown2
 
 @main.route('/') #route decorator
 def index():  #view function
@@ -63,6 +64,14 @@ def new_review(id):
 
     title = f'{movie.title} review'
     return render_template('new_review.html',title = title, review_form=form, movie=movie)
+
+@main.route('/review/<int:id>')
+def single_review(id):
+    review=Review.query.get(id)
+    if review is None:
+        abort(404)
+    format_review = markdown2.markdown(review.movie_review,extras=["code-friendly", "fenced-code-blocks"])
+    return render_template('review.html',review = review,format_review=format_review)
 
 @main.route('/user/<uname>')
 def profile(uname):

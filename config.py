@@ -14,6 +14,9 @@ class Config:
     MAIL_USE_TLS = True #enables a transport layer security to secure emails when sending
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME") #these are yours
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    # simple mde  configurations im
+    SIMPLEMDE_JS_IIFE = True
+    SIMPLEMDE_USE_CDN = True
 
 class ProdConfig(Config):
     '''

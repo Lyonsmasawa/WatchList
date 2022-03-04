@@ -5,7 +5,7 @@ from wtforms.validators import InputRequired #prevents user from submittin empty
 class ReviewForm(FlaskForm):
 
     title = StringField('Review title', validators=[InputRequired()]) #first is the label, second is a list of validators
-    review = TextAreaField('Movie Review', validators=[InputRequired()])
+    review = TextAreaField('Movie Review')
     SubmitField = SubmitField('Submit')
 
 class UpdateProfile(FlaskForm):
